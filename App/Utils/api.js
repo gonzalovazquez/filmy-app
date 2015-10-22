@@ -1,3 +1,5 @@
+var transformPayload = require('./transformRequest');
+
 var api = {
   getMovies(){
     console.log('Get movie');
@@ -11,11 +13,14 @@ var api = {
     return fetch(url).then((res) => res.json());
   },
   addMovie(movie){
-    var url = `http://localhost:5000/api/films`;
-    alert(movie);
+    var url = `http://limitless-forest-6739.herokuapp.com/api/films`;
+    var tPayload = transformPayload(movie);
     return fetch(url, {
-      method:'post',
-      body: movie
+      method: 'post',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(tPayload)
     }).then((res) => res.json());
   },
   deleteMovie(id){
