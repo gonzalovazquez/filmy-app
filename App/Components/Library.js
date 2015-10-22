@@ -7,7 +7,8 @@ var {
   StyleSheet,
   View,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicatorIOS
 } = React;
 
 var styles = StyleSheet.create({
@@ -41,7 +42,8 @@ class Library extends React.Component{
     this.props.navigator.push({
       title: movie.title,
       component: Movie,
-      passProps: {movie: movie}
+      passProps: {movie: movie},
+      canSave: false
    });
   }
   render(){

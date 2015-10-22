@@ -52,7 +52,6 @@ var styles = StyleSheet.create({
 
 class Movie extends React.Component{
   getRowTitle(title){
-    console.log(title[0].toUpperCase() + title.slice(1));
     return title[0] ? title[0].toUpperCase() + title.slice(1): title;
   }
   getTitle(item){
@@ -67,11 +66,12 @@ class Movie extends React.Component{
           });
   }
   render(){
+    var showSave = (
+      this.props.canSave ? <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor="#48BBEC"><Text style={styles.buttonText}> SAVE </Text></TouchableHighlight>: <View></View>
+    );
     var movie = this.props.movie;
-    console.log(movie, 'MOVIE');
     var topicArr = ['director', 'year', 'rated', 'plot', 'country', 'awards', 'imdbRating'];
     var list = topicArr.map((item, index) => {
-      console.log(item, movie[item]);
       if (!movie[item]) {
         item = this.getTitle(item);
       }
@@ -89,12 +89,7 @@ class Movie extends React.Component{
       <ScrollView style={styles.container}>
         <Badge movie={this.props.movie} />
         {list}
-        <TouchableHighlight
-          style={styles.button}
-          onPress={this.handleSubmit.bind(this)}
-          underlayColor="#48BBEC">
-            <Text style={styles.buttonText}> SAVE </Text>
-        </TouchableHighlight>
+        {showSave}
       </ScrollView>
     )
   }

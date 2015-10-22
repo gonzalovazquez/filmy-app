@@ -84,7 +84,7 @@ class Search extends React.Component{
            this.props.navigator.push({
                title: res.Title,
                component: Movie,
-               passProps: {movie: res}
+               passProps: {movie: res, canSave: true}
            });
            this.setState({
              isLoading: false,

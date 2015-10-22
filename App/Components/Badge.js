@@ -30,11 +30,10 @@ var styles = StyleSheet.create({
 
 class Badge extends React.Component{
   render(){
-    console.log(this.props.movie, "BADGE");
     return(
       <View style={styles.container}>
         <Image style={styles.image} source={{ uri: this.props.movie.poster || this.props.movie.Poster }} />
-        <Text style={styles.name}>{this.props.movie.title} </Text>
+        <Text style={styles.name}>{this.props.movie.title || this.props.movie.Title} </Text>
       </View>
     )
   }

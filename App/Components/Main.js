@@ -9,7 +9,8 @@ var {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicatorIOS
 } = React;
 
 var styles = StyleSheet.create({
@@ -98,6 +99,11 @@ class Main extends React.Component{
           underlayColor='#88D4F5'>
           <Text style={styles.buttonText}> View Library </Text>
         </TouchableHighlight>
+        <ActivityIndicatorIOS
+          animating={this.state.isLoading}
+          color= "#111"
+          size="large">
+        </ActivityIndicatorIOS>
       </View>
     )
   }
