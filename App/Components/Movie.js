@@ -1,5 +1,6 @@
 var React = require('react-native');
 var Badge = require('./Badge.js');
+var Library = require('./Library.js');
 var Separator = require('./Helpers/Separator');
 var api = require('../Utils/api');
 
@@ -58,16 +59,20 @@ class Movie extends React.Component{
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
   handleSubmit(){
-      console.log('SAVE');
       api.addMovie(this.props.movie)
           .then((res) => {
-              console.log(res);
               alert('SAVED');
           });
   }
+  handleDelete(){
+    api.deleteMovie(this.props.movie.imdbID)
+      .then((res) => {
+        this.props.navigator.pop();
+      });
+  }
   render(){
     var showSave = (
-      this.props.canSave ? <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor="#48BBEC"><Text style={styles.buttonText}> SAVE </Text></TouchableHighlight>: <View></View>
+      this.props.canSave ? <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor="#48BBEC"><Text style={styles.buttonText}> SAVE </Text></TouchableHighlight> : <TouchableHighlight style={styles.button} onPress={this.handleDelete.bind(this)} underlayColor="#48BBEC"><Text style={styles.buttonText}>DELETE </Text></TouchableHighlight>
     );
     var movie = this.props.movie;
     var topicArr = ['director', 'year', 'rated', 'plot', 'country', 'awards', 'imdbRating'];

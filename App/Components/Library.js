@@ -47,7 +47,6 @@ class Library extends React.Component{
    });
   }
   render(){
-    console.log(this.props);
     var movies = this.props.movies;
     var list = movies.map((item, index) => {
       return(

@@ -56,20 +56,17 @@ class Main extends React.Component{
     return obj;
   }
   findMovie() {
-    console.log('Find movie');
     this.props.navigator.push({
       title: 'Search',
       component: Search
    });
   }
   viewLibrary(){
-    console.log('View Library');
     this.setState({
       isLoading: true
     });
     api.getMovies()
        .then((res) => {
-         console.log(res);
          this.props.navigator.push({
                 title: 'Library',
                 component: Library,
@@ -82,7 +79,6 @@ class Main extends React.Component{
        });
   }
   render(){
-    console.log('Hello from Main');
     var image_url = 'http://freepubtrivia.com/media/2015/07/Film.jpg';
     return(
       <View style={styles.container}>

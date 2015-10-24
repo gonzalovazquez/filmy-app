@@ -3,7 +3,7 @@ var transformPayload = require('./transformRequest');
 var api = {
   getMovies(){
     console.log('Get movie');
-    var url = `http://limitless-forest-6739.herokuapp.com/api/films`;
+    var url = `https://limitless-forest-6739.herokuapp.com/api/films`;
     return fetch(url).then((res) => res.json());
   },
   findMovie(title){
@@ -13,7 +13,7 @@ var api = {
     return fetch(url).then((res) => res.json());
   },
   addMovie(movie){
-    var url = `http://limitless-forest-6739.herokuapp.com/api/films`;
+    var url = `https://limitless-forest-6739.herokuapp.com/api/films`;
     var tPayload = transformPayload(movie);
     return fetch(url, {
       method: 'post',
@@ -24,7 +24,9 @@ var api = {
     }).then((res) => res.json());
   },
   deleteMovie(id){
-    // Delete movie
+    console.log(id);
+    var url = `https://limitless-forest-6739.herokuapp.com/api/films/${id}`;
+    return fetch(url, { method: 'delete'}).then((res) => res.json());
   }
 };
 

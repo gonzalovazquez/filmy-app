@@ -29,7 +29,7 @@ class FilmyProject extends React.Component{
         style={styles.container}
         initialRoute = {{
           title: 'Movies',
-          component: Main,
+          component: Main
         }}
       />
     )
