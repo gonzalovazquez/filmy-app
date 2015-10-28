@@ -61,7 +61,11 @@ class Movie extends React.Component{
   handleSubmit(){
       api.addMovie(this.props.movie)
           .then((res) => {
-              alert('SAVED');
+              if (res === 'Film already exists') {
+                alert('Film already exists');
+              } else {
+                alert('SAVED');
+              }
           });
   }
   handleDelete(){
