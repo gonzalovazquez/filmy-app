@@ -2,6 +2,7 @@ var React = require('react-native');
 var api = require('../Utils/api');
 var Library = require('./Library');
 var Search = require('./Search');
+var SignIn = require('./SignIn');
 
 var {
   Image,
@@ -62,22 +63,27 @@ class Main extends React.Component{
    });
   }
   viewLibrary(){
-    this.setState({
-      isLoading: true
-    });
-    api.getMovies()
-       .then((res) => {
-         this.props.navigator.push({
-                title: 'Library',
-                component: Library,
-                passProps: {movies: res}
-        });
-        this.setState({
-            isLoading: false,
-            movies: res
-        });
-       });
-  }
+    this.props.navigator.push({
+           title: 'SignIn',
+           component: SignIn
+   });
+ }
+  //   this.setState({
+  //     isLoading: true
+  //   });
+  //   api.getMovies()
+  //      .then((res) => {
+  //        this.props.navigator.push({
+  //               title: 'Library',
+  //               component: Library,
+  //               passProps: {movies: res}
+  //       });
+  //       this.setState({
+  //           isLoading: false,
+  //           movies: res
+  //       });
+  //      });
+  // }
   render(){
     var image_url = 'http://freepubtrivia.com/media/2015/07/Film.jpg';
     return(
