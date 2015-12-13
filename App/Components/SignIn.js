@@ -1,4 +1,7 @@
 var React = require('react-native');
+var api = require('../Utils/api');
+var SignUp = require('./SignUp');
+var Home = require('./User/Home.js');
 
 var {
   StyleSheet,
@@ -7,7 +10,8 @@ var {
   View,
   ScrollView,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } = React;
 
 var styles = StyleSheet.create({
@@ -58,35 +62,79 @@ class SignIn extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      username: '',
-      password: ''
+      isLoading: false,
+      email: '',
+      password: '',
+      token: ''
     }
   }
-  handleChange(event){
+  updateEmail(event){
     this.setState({
-      title: event.nativeEvent.text
+      email: event.nativeEvent.text
     });
   }
-  submitLogin() {
-
+  updatePassword(event){
+    this.setState({
+      password: event.nativeEvent.text
+    });
   }
+  signIn(event){
+    this.setState({
+      isLoading: true
+    });
+    console.log(this.state);
+    api.authenticateUser(this.state)
+        .then((res) => {
+          console.log(res);
+          if (!res.type) {
+            console.log('Incorrect password');
+            return alert('Wrong username or password');
+          }
 
-  submitSign() {
+          AsyncStorage.setItem('token', res.token);
 
+          this.props.navigator.push({
+              title: 'Home',
+              component: Home,
+              passProps: {token: res.token, user: res.data}
+          });
+
+          this.setState({
+              isLoading: false
+          });
+        });
+  }
+  signUp(){
+    this.props.navigator.push({
+        title: 'SignUp',
+        component: SignUp
+    });
   }
   render(){
     return(
       <View style={styles.mainContainer}>
         <TextInput
           style={styles.searchInput}
-          value={this.state.username}
-          placeholder="Login"
-          onChange={this.handleChange.bind(this)} />
+          value={this.state.email}
+          placeholder="Type email address"
+          onChange={this.updateEmail.bind(this)} />
         <TextInput
           style={styles.searchInput}
           value={this.state.password}
-          placeholder="SignUp"
-          onChange={this.handleChange.bind(this)} />
+          placeholder="Type password"
+          onChange={this.updatePassword.bind(this)} />
+        <TouchableHighlight
+            style={styles.button}
+            onPress={this.signIn.bind(this)}
+            underlayColor="white">
+              <Text style={styles.buttonText}> SignIn </Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+            style={styles.button}
+            onPress={this.signUp}
+            underlayColor="white">
+              <Text style={styles.buttonText}> SignUp </Text>
+        </TouchableHighlight>
       </View>
     )
   }

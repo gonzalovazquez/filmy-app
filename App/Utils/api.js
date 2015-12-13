@@ -1,17 +1,34 @@
 var transformPayload = require('./transformRequest');
 
+const HOSTNAME = 'http://localhost:5000/api/';
+//const HOSTNAME = 'https://limitless-forest-6739.herokuapp.com/api/';
+
 var api = {
+  authenticateUser(user) {
+    console.log(user);
+    var url = `http://localhost:5000/authenticate`
+    return fetch(url, {
+      method: 'post',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(user)
+    }).then((res) => {
+      console.log(res);
+      return res.json();
+    })
+  },
   getMovies(){
-    var url = `https://limitless-forest-6739.herokuapp.com/api/films`;
+    var url = `http://localhost:5000/api/films`;
     return fetch(url).then((res) => res.json());
   },
   findMovie(title){
     var title = title.replace(" ", '%20');
-    var url = `https://limitless-forest-6739.herokuapp.com/api/?title=${title}`;
+    var url = `http://localhost:5000/api/?title=${title}`;
     return fetch(url).then((res) => res.json());
   },
   addMovie(movie){
-    var url = `https://limitless-forest-6739.herokuapp.com/api/films`;
+    var url = `http://localhost:5000/api/films`;
     var tPayload = transformPayload(movie);
     return fetch(url, {
       method: 'post',
@@ -28,7 +45,7 @@ var api = {
     });
   },
   deleteMovie(id){
-    var url = `https://limitless-forest-6739.herokuapp.com/api/films/${id}`;
+    var url = `http://localhost:5000/api/films/${id}`;
     return fetch(url, { method: 'delete'}).then((res) => res.json());
   }
 };

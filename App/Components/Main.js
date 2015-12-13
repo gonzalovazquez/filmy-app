@@ -1,6 +1,5 @@
 var React = require('react-native');
 var api = require('../Utils/api');
-var Library = require('./Library');
 var Search = require('./Search');
 var SignIn = require('./SignIn');
 
@@ -11,7 +10,8 @@ var {
   Text,
   View,
   TouchableHighlight,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  AsyncStorage
 } = React;
 
 var styles = StyleSheet.create({
@@ -34,8 +34,16 @@ class Main extends React.Component{
     super(props);
     this.state = {
       movies: {},
-      isLoading: false
+      isLoading: false,
+      token: ''
     }
+  }
+  componentDidMount() {
+    AsyncStorage.getItem("token").then((value) => {
+        console.log('AUTH Token' + value);
+        this.setState({"token": value});
+        console.log(this.state);
+    }).done();
   }
   makeBackground(btn){
     var obj = {
@@ -62,30 +70,27 @@ class Main extends React.Component{
       component: Search
    });
   }
-  viewLibrary(){
+  signIn(){
+    //TODO
+    //if auth token is present get rid of access token and alert user
     this.props.navigator.push({
-           title: 'SignIn',
-           component: SignIn
+        title: 'SignIn',
+        component: SignIn
    });
  }
-  //   this.setState({
-  //     isLoading: true
-  //   });
-  //   api.getMovies()
-  //      .then((res) => {
-  //        this.props.navigator.push({
-  //               title: 'Library',
-  //               component: Library,
-  //               passProps: {movies: res}
-  //       });
-  //       this.setState({
-  //           isLoading: false,
-  //           movies: res
-  //       });
-  //      });
-  // }
+ signOut() {
+   AsyncStorage.removeItem('token').then((value) => {
+     console.log(value);
+     alert('Signed Out')
+     this.setState({"token": null});
+   });
+ }
   render(){
     var image_url = 'http://freepubtrivia.com/media/2015/07/Film.jpg';
+    var showSignIn = (
+      this.state.token ? <TouchableHighlight style={this.makeBackground(1)} onPress={this.signOut.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}>Sign Out </Text></TouchableHighlight> :
+      <TouchableHighlight style={this.makeBackground(1)} onPress={this.signIn.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}> Sign In </Text></TouchableHighlight>
+    );
     return(
       <View style={styles.container}>
         <Image source={{ uri: image_url }} style={styles.image}/>
@@ -95,12 +100,7 @@ class Main extends React.Component{
           underlayColor='#88D4F5'>
           <Text style={styles.buttonText}> Find Movie </Text>
         </TouchableHighlight>
-        <TouchableHighlight
-          style={this.makeBackground(1)}
-          onPress={this.viewLibrary.bind(this)}
-          underlayColor='#88D4F5'>
-          <Text style={styles.buttonText}> View Library </Text>
-        </TouchableHighlight>
+        {showSignIn}
         <ActivityIndicatorIOS
           animating={this.state.isLoading}
           color= "#111"

@@ -8,7 +8,8 @@ var {
   TextInput,
   TouchableHighlight,
   StyleSheet,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  AsyncStorage
 } = React;
 
 var styles = StyleSheet.create({
@@ -60,8 +61,15 @@ class Search extends React.Component{
     super(props);
     this.state = {
       title: '',
-      isLoading: false
+      isLoading: false,
+      token: ''
     }
+  }
+  componentDidMount() {
+    AsyncStorage.getItem("token").then((value) => {
+        console.log('AUTH Token' + value);
+        this.setState({"token": value});
+    }).done();
   }
   handleChange(event){
     this.setState({
@@ -69,6 +77,8 @@ class Search extends React.Component{
     });
   }
   handleSubmit(){
+    var isAuthenticated = this.state.token !== null ? true : false;
+    console.log('Is Authenticated ' + isAuthenticated);
     this.setState({
       isLoading: true
     });
@@ -84,7 +94,7 @@ class Search extends React.Component{
            this.props.navigator.push({
                title: res.Title,
                component: Movie,
-               passProps: {movie: res, canSave: true}
+               passProps: {movie: res, canSave: true, isAuthenticated: isAuthenticated}
            });
            this.setState({
              isLoading: false,
@@ -96,7 +106,7 @@ class Search extends React.Component{
   }
   render(){
     var showErr = (
-      this.state.erro ? <Text>{this.state.error}</Text> : <View></View>
+      this.state.error ? <Text>{this.state.error}</Text> : <View></View>
     );
     return(
       <View style={styles.mainContainer}>

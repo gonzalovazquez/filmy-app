@@ -1,6 +1,6 @@
 var React = require('react-native');
-var Separator = require('./Helpers/Separator');
-var Movie = require('./Movie');
+var Separator = require('../Helpers/Separator');
+var Movie = require('../Movie');
 
 var {
   Text,
@@ -47,6 +47,7 @@ class Library extends React.Component{
    });
   }
   render(){
+    console.log('LIBRARY' + this.props.movies);
     var movies = this.props.movies;
     var list = movies.map((item, index) => {
       return(
