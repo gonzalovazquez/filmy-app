@@ -2,6 +2,7 @@ var React = require('react-native');
 var api = require('../Utils/api');
 var Search = require('./Search');
 var SignIn = require('./SignIn');
+var Home = require('./User/Home.js');
 
 var {
   Image,
@@ -60,6 +61,9 @@ class Main extends React.Component{
       case 1:
         obj.backgroundColor='#E77AAE';
         break;
+      case 2:
+        obj.backgroundColor='#A0DB8E';
+        break;
     }
 
     return obj;
@@ -85,12 +89,20 @@ class Main extends React.Component{
      this.setState({"token": null});
    });
  }
+ goHome() {
+     this.props.navigator.push({
+         title: 'Home',
+         component: Home
+    });
+ }
   render(){
     var image_url = 'http://freepubtrivia.com/media/2015/07/Film.jpg';
     var showSignIn = (
       this.state.token ? <TouchableHighlight style={this.makeBackground(1)} onPress={this.signOut.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}>Sign Out </Text></TouchableHighlight> :
       <TouchableHighlight style={this.makeBackground(1)} onPress={this.signIn.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}> Sign In </Text></TouchableHighlight>
     );
+    var showHome = this.state.token ? <TouchableHighlight style={this.makeBackground(2)} onPress={this.goHome.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}>Home</Text></TouchableHighlight> :
+    null;
     return(
       <View style={styles.container}>
         <Image source={{ uri: image_url }} style={styles.image}/>
@@ -101,6 +113,7 @@ class Main extends React.Component{
           <Text style={styles.buttonText}> Find Movie </Text>
         </TouchableHighlight>
         {showSignIn}
+        {showHome}
         <ActivityIndicatorIOS
           animating={this.state.isLoading}
           color= "#111"

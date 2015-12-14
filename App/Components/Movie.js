@@ -10,7 +10,8 @@ var {
   Text,
   View,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } = React;
 
 var styles = StyleSheet.create({
@@ -52,6 +53,11 @@ var styles = StyleSheet.create({
 });
 
 class Movie extends React.Component{
+  componentDidMount() {
+    AsyncStorage.getItem("token").then((value) => {
+        this.setState({"token": value});
+    }).done();
+  }
   getRowTitle(title){
     return title[0] ? title[0].toUpperCase() + title.slice(1): title;
   }
@@ -59,12 +65,12 @@ class Movie extends React.Component{
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
   handleSubmit(){
-    api.addMovie(this.props.movie)
+    api.addMovie(this.state.token, this.props.movie)
         .then((res) => {
             if (res === 'Film already exists') {
-              return alert('Film already exists');
+              alert('Film already exists');
             } else {
-              return alert('SAVED');
+              alert('SAVED');
             }
         });
   }

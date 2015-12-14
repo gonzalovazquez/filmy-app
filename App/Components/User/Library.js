@@ -38,16 +38,14 @@ var styles = StyleSheet.create({
 
 class Library extends React.Component{
   selectFilm(movie){
-    console.log(movie);
     this.props.navigator.push({
       title: movie.title,
       component: Movie,
-      passProps: {movie: movie},
+      passProps: { movie: movie },
       canSave: false
    });
   }
   render(){
-    console.log('LIBRARY' + this.props.movies);
     var movies = this.props.movies;
     var list = movies.map((item, index) => {
       return(

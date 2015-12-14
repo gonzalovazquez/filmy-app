@@ -18,21 +18,28 @@ var api = {
       return res.json();
     })
   },
-  getMovies(){
-    var url = `http://localhost:5000/api/films`;
-    return fetch(url).then((res) => res.json());
+  getMovies(token){
+    var url = `http://localhost:5000/me`;
+    return fetch(url,
+    {
+      method: 'get',
+      headers: {
+        "Authorization": token,
+      }
+    }).then((res) => res.json());
   },
   findMovie(title){
     var title = title.replace(" ", '%20');
     var url = `http://localhost:5000/api/?title=${title}`;
     return fetch(url).then((res) => res.json());
   },
-  addMovie(movie){
+  addMovie(token, movie){
     var url = `http://localhost:5000/api/films`;
     var tPayload = transformPayload(movie);
     return fetch(url, {
       method: 'post',
       headers: {
+        "Authorization": token,
         "Content-type": "application/json"
       },
       body: JSON.stringify(tPayload)

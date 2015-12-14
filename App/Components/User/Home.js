@@ -10,7 +10,8 @@ var {
   Text,
   View,
   TouchableHighlight,
-  ActivityIndicatorIOS
+  ActivityIndicatorIOS,
+  AsyncStorage
 } = React;
 
 var styles = StyleSheet.create({
@@ -29,6 +30,11 @@ var styles = StyleSheet.create({
 });
 
 class Home extends React.Component{
+  componentDidMount() {
+    AsyncStorage.getItem("token").then((value) => {
+        this.setState({"token": value});
+    }).done();
+  }
   makeBackground(btn){
     var obj = {
       flexDirection: 'row',
@@ -55,13 +61,21 @@ class Home extends React.Component{
    });
   }
   viewLibrary(){
-      this.props.navigator.push({
-             title: 'Library',
-             component: Library,
-             passProps: {
-               username: this.props.user.username,
-               movies: this.props.user.movies
-             }
+      api.getMovies(this.state.token)
+        .then((res) => {
+          if (!res.type) {
+            alert('Could not fetch your libary');
+          }
+          this.props.navigator.push({
+            title: 'Library',
+            component: Library,
+            passProps: {
+              username: res.data.username,
+              movies: res.data.movies
+            }
+          });
+          // TODO
+          // Add loading false
      });
   }
   render(){
