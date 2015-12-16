@@ -2,7 +2,7 @@ var React = require('react-native');
 var api = require('../Utils/api');
 var Search = require('./Search');
 var SignIn = require('./SignIn');
-var Home = require('./User/Home.js');
+var Dashboard = require('./User/Dashboard.js');
 
 var {
   Image,
@@ -42,8 +42,12 @@ class Main extends React.Component{
   componentDidMount() {
     AsyncStorage.getItem("token").then((value) => {
         console.log('AUTH Token' + value);
-        this.setState({"token": value});
-        console.log(this.state);
+        if (value) {
+          this.props.navigator.replace({
+              title: 'Dashboard',
+              component: Dashboard
+          });
+        }
     }).done();
   }
   makeBackground(btn){
@@ -60,9 +64,6 @@ class Main extends React.Component{
         break;
       case 1:
         obj.backgroundColor='#E77AAE';
-        break;
-      case 2:
-        obj.backgroundColor='#A0DB8E';
         break;
     }
 
@@ -82,27 +83,8 @@ class Main extends React.Component{
         component: SignIn
    });
  }
- signOut() {
-   AsyncStorage.removeItem('token').then((value) => {
-     console.log(value);
-     alert('Signed Out')
-     this.setState({"token": null});
-   });
- }
- goHome() {
-     this.props.navigator.push({
-         title: 'Home',
-         component: Home
-    });
- }
   render(){
     var image_url = 'http://freepubtrivia.com/media/2015/07/Film.jpg';
-    var showSignIn = (
-      this.state.token ? <TouchableHighlight style={this.makeBackground(1)} onPress={this.signOut.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}>Sign Out </Text></TouchableHighlight> :
-      <TouchableHighlight style={this.makeBackground(1)} onPress={this.signIn.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}> Sign In </Text></TouchableHighlight>
-    );
-    var showHome = this.state.token ? <TouchableHighlight style={this.makeBackground(2)} onPress={this.goHome.bind(this)} underlayColor="#88D4F5"><Text style={styles.buttonText}>Home</Text></TouchableHighlight> :
-    null;
     return(
       <View style={styles.container}>
         <Image source={{ uri: image_url }} style={styles.image}/>
@@ -112,8 +94,12 @@ class Main extends React.Component{
           underlayColor='#88D4F5'>
           <Text style={styles.buttonText}> Find Movie </Text>
         </TouchableHighlight>
-        {showSignIn}
-        {showHome}
+        <TouchableHighlight
+          style={this.makeBackground(1)}
+          onPress={this.signIn.bind(this)}
+          underlayColor="#88D4F5">
+          <Text style={styles.buttonText}> Sign In </Text>
+        </TouchableHighlight>
         <ActivityIndicatorIOS
           animating={this.state.isLoading}
           color= "#111"

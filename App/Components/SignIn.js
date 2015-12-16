@@ -1,7 +1,7 @@
 var React = require('react-native');
 var api = require('../Utils/api');
 var SignUp = require('./SignUp');
-var Home = require('./User/Home.js');
+var Dashboard = require('./User/Dashboard.js');
 
 var {
   StyleSheet,
@@ -82,7 +82,7 @@ class SignIn extends React.Component{
     this.setState({
       isLoading: true
     });
-    console.log(this.state);
+
     api.authenticateUser(this.state)
         .then((res) => {
           console.log(res);
@@ -94,9 +94,9 @@ class SignIn extends React.Component{
           AsyncStorage.setItem('token', res.token);
 
           this.props.navigator.push({
-              title: 'Home',
-              component: Home,
-              passProps: {token: res.token, user: res.data}
+              title: 'Dashboard',
+              component: Dashboard,
+              passProps: { token: res.token, user: res.data }
           });
 
           this.setState({
@@ -117,11 +117,14 @@ class SignIn extends React.Component{
           style={styles.searchInput}
           value={this.state.email}
           placeholder="Type email address"
+          autoCapitalize="none"
+          keyboardType="email-address"
           onChange={this.updateEmail.bind(this)} />
         <TextInput
           style={styles.searchInput}
           value={this.state.password}
           placeholder="Type password"
+          autoCapitalize="none"
           onChange={this.updatePassword.bind(this)} />
         <TouchableHighlight
             style={styles.button}
