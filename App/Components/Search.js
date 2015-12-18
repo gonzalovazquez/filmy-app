@@ -67,7 +67,6 @@ class Search extends React.Component{
   }
   componentDidMount() {
     AsyncStorage.getItem("token").then((value) => {
-        console.log('AUTH Token' + value);
         this.setState({"token": value});
     }).done();
   }

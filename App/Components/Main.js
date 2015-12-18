@@ -40,8 +40,7 @@ class Main extends React.Component{
     }
   }
   componentDidMount() {
-    AsyncStorage.getItem("token").then((value) => {
-        console.log('AUTH Token' + value);
+    AsyncStorage.getItem("token").then((value) => { 
         if (value) {
           this.props.navigator.replace({
               title: 'Dashboard',

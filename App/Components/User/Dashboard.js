@@ -2,6 +2,7 @@ var React = require('react-native');
 var api = require('../../Utils/api');
 var Library = require('./Library');
 var Search = require('../Search');
+var Profile = require('./Profile');
 
 var {
   Image,
@@ -31,6 +32,7 @@ var styles = StyleSheet.create({
 
 class Home extends React.Component{
   componentDidMount() {
+    console.log(this.props);
     AsyncStorage.getItem("token").then((value) => {
         this.setState({"token": value});
     }).done();
@@ -49,6 +51,9 @@ class Home extends React.Component{
         break;
       case 1:
         obj.backgroundColor='#E77AAE';
+        break;
+      case 2:
+        obj.backgroundColor='#E45345';
         break;
     }
 
@@ -78,6 +83,24 @@ class Home extends React.Component{
           // Add loading false
      });
   }
+  profile(){
+    api.getMovies(this.state.token)
+      .then((res) => {
+        console.log('Profile');
+        console.log(res);
+        if (!res.type) {
+          alert('Could not fetch your libary');
+        }
+        this.props.navigator.push({
+          title: 'Profile',
+          component: Profile,
+          passProps: {
+            email: res.data.email,
+            username: res.data.username
+          }
+        });
+      });
+  }
   render(){
     var image_url = 'http://freepubtrivia.com/media/2015/07/Film.jpg';
     return(
@@ -94,6 +117,12 @@ class Home extends React.Component{
           onPress={this.viewLibrary.bind(this)}
           underlayColor='#88D4F5'>
           <Text style={styles.buttonText}> View Library </Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={this.makeBackground(2)}
+          onPress={this.profile.bind(this)}
+          underlayColor='#88D4F5'>
+          <Text style={styles.buttonText}>Profile</Text>
         </TouchableHighlight>
       </View>
     )
