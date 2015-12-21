@@ -65,9 +65,6 @@ var styles = StyleSheet.create({
 });
 
 class Profile extends React.Component{
-  componentDidMount() {
-    console.log(this.props);
-  }
   logout() {
     AsyncStorage.removeItem("token").then((value) => {
       this.props.navigator.popToTop();

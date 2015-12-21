@@ -38,13 +38,10 @@ var styles = StyleSheet.create({
 
 class Library extends React.Component{
   selectFilm(movie){
-    console.log(this.props);
-    console.log(movie);
     this.props.navigator.push({
       title: movie.title,
       component: Movie,
-      passProps: { movie: movie },
-      canSave: false
+      passProps: { movie: movie, canSave: false }
    });
   }
   render(){

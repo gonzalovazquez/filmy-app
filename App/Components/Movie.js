@@ -67,6 +67,7 @@ class Movie extends React.Component{
   handleSubmit(){
     api.addMovie(this.state.token, this.props.movie)
         .then((res) => {
+            console.log(res);
             if (res === 'Film already exists') {
               alert('Film already exists');
             } else {
