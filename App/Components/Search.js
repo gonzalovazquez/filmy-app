@@ -77,7 +77,6 @@ class Search extends React.Component{
   }
   handleSubmit(){
     var isAuthenticated = this.state.token !== null ? true : false;
-    console.log('Is Authenticated ' + isAuthenticated);
     this.setState({
       isLoading: true
     });
@@ -90,6 +89,7 @@ class Search extends React.Component{
            });
          } else {
            console.log(res, 'SEARCH');
+           debugger
            this.props.navigator.push({
                title: res.Title,
                component: Movie,

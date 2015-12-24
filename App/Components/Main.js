@@ -40,7 +40,7 @@ class Main extends React.Component{
     }
   }
   componentDidMount() {
-    AsyncStorage.getItem("token").then((value) => { 
+    AsyncStorage.getItem("token").then((value) => {
         if (value) {
           this.props.navigator.replace({
               title: 'Dashboard',
@@ -75,8 +75,6 @@ class Main extends React.Component{
    });
   }
   signIn(){
-    //TODO
-    //if auth token is present get rid of access token and alert user
     this.props.navigator.push({
         title: 'SignIn',
         component: SignIn
