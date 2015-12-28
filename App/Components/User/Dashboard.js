@@ -30,7 +30,7 @@ var styles = StyleSheet.create({
   }
 });
 
-class Home extends React.Component{
+class Dashboard extends React.Component{
   componentDidMount() {
     console.log(this.props);
     AsyncStorage.getItem("token").then((value) => {
@@ -129,4 +129,4 @@ class Home extends React.Component{
   }
 };
 
-module.exports = Home;
+module.exports = Dashboard;
