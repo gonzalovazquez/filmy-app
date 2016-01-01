@@ -1,6 +1,5 @@
 var React = require('react-native');
 var Badge = require('./Badge.js');
-var Library = require('./User/Library.js');
 var Separator = require('./Helpers/Separator');
 var api = require('../Utils/api');
 
