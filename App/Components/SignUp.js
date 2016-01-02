@@ -1,13 +1,14 @@
 var React = require('react-native');
+var api = require('../Utils/api');
+var Dashboard = require('./User/Dashboard');
 
 var {
   StyleSheet,
-  Image,
   Text,
   View,
-  ScrollView,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } = React;
 
 var styles = StyleSheet.create({
@@ -54,27 +55,55 @@ var styles = StyleSheet.create({
   },
 });
 
-class signUp extends React.Component{
+class SignUp extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       isLoading: false,
-      username: '',
+      email: '',
       password: '',
-      email: ''
+      username: ''
     }
   }
-  updateUsername(event){
+  setEmail(event){
+    this.setState({
+      email: event.nativeEvent.text
+    });
+  }
+  setUsername(event){
     this.setState({
       username: event.nativeEvent.text
     });
-    console.log(this.state);
   }
-  updatePassword(event){
+  setPassword(event){
     this.setState({
       password: event.nativeEvent.text
     });
-    console.log(this.state);
+  }
+  submit(event){
+    this.setState({
+      isLoading: true
+    });
+
+    api.registerUser(this.state)
+      .then((res) => {
+
+        if (!res.type) {
+          return alert(res.data)
+        }
+
+        this.setState({
+            isLoading: false
+        });
+
+        this.props.navigator.push({
+            title: 'Dashboard',
+            component: Dashboard,
+            passProps: { token: res.token, user: res.data }
+        });
+        console.log(res.token);
+        AsyncStorage.setItem('token', res.token);
+      })
   }
   render(){
     return(
@@ -82,16 +111,31 @@ class signUp extends React.Component{
         <TextInput
           style={styles.searchInput}
           value={this.state.username}
-          placeholder="Login"
-          onChange={this.updateUsername.bind(this)} />
+          placeholder="username"
+          autoCapitalize="none"
+          onChange={this.setUsername.bind(this)} />
         <TextInput
           style={styles.searchInput}
           value={this.state.password}
-          placeholder="SignUp"
-          onChange={this.updatePassword.bind(this)} />
+          placeholder="password"
+          autoCapitalize="none"
+          onChange={this.setPassword.bind(this)} />
+          <TextInput
+            style={styles.searchInput}
+            value={this.state.email}
+            placeholder="email"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            onChange={this.setEmail.bind(this)} />
+          <TouchableHighlight
+              style={styles.button}
+              onPress={this.submit.bind(this)}
+              underlayColor="white">
+                <Text style={styles.buttonText}> Submit </Text>
+          </TouchableHighlight>
       </View>
     )
   }
 };
 
-// module.exports = SignUp;
+module.exports = SignUp;

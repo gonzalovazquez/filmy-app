@@ -4,9 +4,9 @@ const HOSTNAME = 'http://localhost:5000/api/';
 //const HOSTNAME = 'https://limitless-forest-6739.herokuapp.com/api/';
 
 var api = {
-  authenticateUser(user) {
+  registerUser(user){
     console.log(user);
-    var url = `http://localhost:5000/authenticate`
+    var url = `http://localhost:5000/signIn`
     return fetch(url, {
       method: 'post',
       headers: {
@@ -15,6 +15,18 @@ var api = {
       body: JSON.stringify(user)
     }).then((res) => {
       console.log(res);
+      return res.json();
+    })
+  },
+  authenticateUser(user) {
+    var url = `http://localhost:5000/authenticate`
+    return fetch(url, {
+      method: 'post',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(user)
+    }).then((res) => {
       return res.json();
     })
   },
