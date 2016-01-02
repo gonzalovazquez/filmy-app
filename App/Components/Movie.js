@@ -66,8 +66,7 @@ class Movie extends React.Component{
   handleSubmit(){
     api.addMovie(this.state.token, this.props.movie)
         .then((res) => {
-            console.log(res);
-            if (res === 'Film already exists') {
+            if (!res) {
               alert('Film already exists');
             } else {
               alert('SAVED');
@@ -75,9 +74,13 @@ class Movie extends React.Component{
         });
   }
   handleDelete(){
-    api.deleteMovie(this.props.movie.imdbID)
+    api.deleteMovie(this.state.token, this.props.movie.imdbID)
       .then((res) => {
-        this.props.navigator.pop();
+        if (res) {
+          this.props.navigator.pop();
+        } else {
+          return alert('An error occured');
+        }
         //TODO
         //When returning to previous screen figure out how to refresh
       });

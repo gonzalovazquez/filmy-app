@@ -1,12 +1,8 @@
 var transformPayload = require('./transformRequest');
 
-const HOSTNAME = 'http://localhost:5000/api/';
-//const HOSTNAME = 'https://limitless-forest-6739.herokuapp.com/api/';
-
 var api = {
   registerUser(user){
-    console.log(user);
-    var url = `http://localhost:5000/signIn`
+    var url = `https://limitless-forest-6739.herokuapp.com/signIn`
     return fetch(url, {
       method: 'post',
       headers: {
@@ -14,12 +10,11 @@ var api = {
       },
       body: JSON.stringify(user)
     }).then((res) => {
-      console.log(res);
       return res.json();
     })
   },
   authenticateUser(user) {
-    var url = `http://localhost:5000/authenticate`
+    var url = `https://limitless-forest-6739.herokuapp.com/authenticate`
     return fetch(url, {
       method: 'post',
       headers: {
@@ -31,7 +26,7 @@ var api = {
     })
   },
   getMovies(token){
-    var url = `http://localhost:5000/me`;
+    var url = `https://limitless-forest-6739.herokuapp.com/me`;
     return fetch(url,
     {
       method: 'get',
@@ -42,12 +37,13 @@ var api = {
   },
   findMovie(title){
     var title = title.replace(" ", '%20');
-    var url = `http://localhost:5000/api/?title=${title}`;
+    var url = `https://limitless-forest-6739.herokuapp.com/api/?title=${title}`;
     return fetch(url).then((res) => res.json());
   },
   addMovie(token, movie){
-    var url = `http://localhost:5000/api/films`;
+    var url = `https://limitless-forest-6739.herokuapp.com/api/films`;
     var tPayload = transformPayload(movie);
+    var token = token;
     return fetch(url, {
       method: 'post',
       headers: {
@@ -56,17 +52,24 @@ var api = {
       },
       body: JSON.stringify(tPayload)
     }).then((res) => {
-      if (res._bodyInit === 'Film already exists') {
-        return 'Film already exists';
+      if (res._bodyInit === 'Movie already exists') {
+        return false;
       } else {
         return res.json()
       }
     });
   },
-  deleteMovie(id){
-    var url = `http://localhost:5000/api/films/${id}`;
-    return fetch(url, { method: 'delete'}).then((res) => res.json());
-  }
+  deleteMovie(token, id){
+    var url = `https://limitless-forest-6739.herokuapp.com/api/films/${id}`;
+    return fetch(url, {
+      method: 'delete',
+      headers: {
+        "Authorization": token
+      }
+      }).then((res) => {
+        return res.status === 200 ? true : false;
+      });
+    }
 };
 
 module.exports = api;
