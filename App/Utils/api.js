@@ -1,8 +1,9 @@
 var transformPayload = require('./transformRequest');
+var GLOBAL = require('./Global');
 
 var api = {
   registerUser(user){
-    var url = `https://limitless-forest-6739.herokuapp.com/signIn`
+    var url = `${GLOBAL.BASE_URL}signIn`
     return fetch(url, {
       method: 'post',
       headers: {
@@ -14,7 +15,7 @@ var api = {
     })
   },
   authenticateUser(user) {
-    var url = `https://limitless-forest-6739.herokuapp.com/authenticate`
+    var url = `${GLOBAL.BASE_URL}authenticate`
     return fetch(url, {
       method: 'post',
       headers: {
@@ -26,7 +27,7 @@ var api = {
     })
   },
   getMovies(token){
-    var url = `https://limitless-forest-6739.herokuapp.com/me`;
+    var url = `${GLOBAL.BASE_URL}me`;
     return fetch(url,
     {
       method: 'get',
@@ -37,11 +38,11 @@ var api = {
   },
   findMovie(title){
     var title = title.replace(" ", '%20');
-    var url = `https://limitless-forest-6739.herokuapp.com/api/?title=${title}`;
+    var url = `${GLOBAL.BASE_URL}api/?title=${title}`;
     return fetch(url).then((res) => res.json());
   },
   addMovie(token, movie){
-    var url = `https://limitless-forest-6739.herokuapp.com/api/films`;
+    var url = `${GLOBAL.BASE_URL}api/films`;
     var tPayload = transformPayload(movie);
     var token = token;
     return fetch(url, {
@@ -60,7 +61,7 @@ var api = {
     });
   },
   deleteMovie(token, id){
-    var url = `https://limitless-forest-6739.herokuapp.com/api/films/${id}`;
+    var url = `${GLOBAL.BASE_URL}api/films/${id}`;
     return fetch(url, {
       method: 'delete',
       headers: {

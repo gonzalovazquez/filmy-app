@@ -31,6 +31,9 @@ var transformPayload = function(payload){
         if (key === 'genre' || key === 'writer' || key === 'actors' || key === 'language') {
           val = convertToArray(val);
         }
+        if (val === 'N/A' && key !== 'poster') {
+            val = 0;
+        }
         return key, val;
       });
       var interator = function(key) {
