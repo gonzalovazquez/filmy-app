@@ -125,6 +125,7 @@ class SignIn extends React.Component{
           value={this.state.password}
           placeholder="Type password"
           autoCapitalize="none"
+          secureTextEntry="true"
           onChange={this.updatePassword.bind(this)} />
         <TouchableHighlight
             style={styles.button}

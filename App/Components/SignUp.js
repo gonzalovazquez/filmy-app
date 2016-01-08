@@ -119,6 +119,7 @@ class SignUp extends React.Component{
           value={this.state.password}
           placeholder="password"
           autoCapitalize="none"
+          secureTextEntry="true"
           onChange={this.setPassword.bind(this)} />
           <TextInput
             style={styles.searchInput}
