@@ -76,13 +76,11 @@ class Movie extends React.Component{
   handleDelete(){
     api.deleteMovie(this.state.token, this.props.movie.imdbID)
       .then((res) => {
-        if (res) {
-          this.props.navigator.pop();
+        if (res.status === 200) {
+          this.props.navigator.popToTop();
         } else {
           return alert('An error occured');
         }
-        //TODO
-        //When returning to previous screen figure out how to refresh
       });
   }
   render(){

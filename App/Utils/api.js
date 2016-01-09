@@ -68,7 +68,7 @@ var api = {
         "Authorization": token
       }
       }).then((res) => {
-        return res.status === 200 ? true : false;
+        return response = {status: JSON.parse(res.status), movies: JSON.parse(res._bodyText).data.movies }
       });
     }
 };

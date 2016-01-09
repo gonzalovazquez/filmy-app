@@ -41,7 +41,11 @@ class Library extends React.Component{
     this.props.navigator.push({
       title: selectedMovie.Title,
       component: Movie,
-      passProps: { movie: selectedMovie, canSave: false, isAuthenticated: true }
+      passProps: {
+        movie: selectedMovie,
+        canSave: false,
+        isAuthenticated: true
+      }
    });
   }
   render(){
