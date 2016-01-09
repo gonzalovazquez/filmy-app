@@ -99,7 +99,7 @@ class Search extends React.Component{
              isLoading: false,
              error: false,
              title: ''
-           })
+           });
          }
        });
   }

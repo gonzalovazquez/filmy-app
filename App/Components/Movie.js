@@ -10,7 +10,8 @@ var {
   View,
   ScrollView,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicatorIOS
 } = React;
 
 var styles = StyleSheet.create({
@@ -52,6 +53,12 @@ var styles = StyleSheet.create({
 });
 
 class Movie extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      isLoading: false
+    }
+  }
   componentDidMount() {
     AsyncStorage.getItem("token").then((value) => {
         this.setState({"token": value});
@@ -64,11 +71,16 @@ class Movie extends React.Component{
     return item[0] ? item[0].toUpperCase() + item.slice(1) : item;
   }
   handleSubmit(){
+    this.setState({
+      isLoading: true
+    });
     api.addMovie(this.state.token, this.props.movie)
         .then((res) => {
             if (!res) {
+              this.setState({ isLoading: false });
               alert('Film already exists');
             } else {
+              this.setState({ isLoading: false });
               alert('SAVED');
             }
         });
@@ -112,6 +124,11 @@ class Movie extends React.Component{
         <Badge movie={this.props.movie} />
         {list}
         {showSave}
+        <ActivityIndicatorIOS
+          animating={this.state.isLoading}
+          color= "#111"
+          size="large">
+        </ActivityIndicatorIOS>
       </ScrollView>
     )
   }
