@@ -1,6 +1,7 @@
 var React = require('react-native');
 var api = require('../Utils/api');
 var Dashboard = require('./User/Dashboard');
+var validate = require('../Utils/validate');
 
 var {
   StyleSheet,
@@ -81,6 +82,15 @@ class SignUp extends React.Component{
     });
   }
   submit(event){
+
+    if (!validate.emailAddress(this.state.email)) {
+      return alert('Please enter a proper email address');
+    } else if (validate.username(this.state.username)) {
+      return alert('Please enter a username');
+    } else if (validate.password(this.state.password)) {
+      return alert('Please enter a password');
+    }
+
     this.setState({
       isLoading: true
     });
