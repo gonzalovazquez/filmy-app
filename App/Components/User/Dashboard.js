@@ -32,9 +32,11 @@ var styles = StyleSheet.create({
 
 class Dashboard extends React.Component{
   componentDidMount() {
-    console.log(this.props);
     AsyncStorage.getItem("token").then((value) => {
         this.setState({"token": value});
+        if (!value) {
+          this.props.navigator.popToTop();
+        }
     }).done();
   }
   makeBackground(btn){
@@ -86,8 +88,6 @@ class Dashboard extends React.Component{
   profile(){
     api.getMovies(this.state.token)
       .then((res) => {
-        console.log('Profile');
-        console.log(res);
         if (!res.type) {
           alert('Could not fetch your libary');
         }
