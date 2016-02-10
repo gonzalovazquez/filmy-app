@@ -70,6 +70,7 @@ class Dashboard extends React.Component{
   viewLibrary(){
       api.getMovies(this.state.token)
         .then((res) => {
+          console.log(res);
           if (!res.type) {
             alert('Could not fetch your libary');
           }

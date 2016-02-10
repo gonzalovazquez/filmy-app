@@ -35,7 +35,7 @@ var api = {
         "Authorization": token,
       }
     }).then((res) => {
-      res.json();
+      return res.json();
     });
   },
   findMovie(title){

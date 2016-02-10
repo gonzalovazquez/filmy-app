@@ -41,7 +41,7 @@ class Main extends React.Component{
   }
   componentDidMount() {
     AsyncStorage.getItem("token").then((value) => {
-        console.log(value + 'FROM MAIN');
+        console.log(value);
         if (value) {
           this.props.navigator.replace({
               title: 'Dashboard',
