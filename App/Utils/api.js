@@ -34,7 +34,9 @@ var api = {
       headers: {
         "Authorization": token,
       }
-    }).then((res) => res.json());
+    }).then((res) => {
+      res.json();
+    });
   },
   findMovie(title){
     var title = title.replace(" ", '%20');
