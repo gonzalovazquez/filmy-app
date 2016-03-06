@@ -21,7 +21,10 @@ var styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    height: 350
+    width: 380,
+    height: 300,
+    borderWidth: 0.5,
+    borderColor: 'black'
   },
   buttonText: {
     fontSize: 24,
@@ -103,10 +106,9 @@ class Dashboard extends React.Component{
       });
   }
   render(){
-    var image_url = 'http://freepubtrivia.com/media/2015/07/Film.jpg';
     return(
       <View style={styles.container}>
-        <Image source={{ uri: image_url }} style={styles.image}/>
+      <Image source={require('../../Images/loadingScreen.png')} style={styles.image}/>
         <TouchableHighlight
           style={this.makeBackground(0)}
           onPress={this.findMovie.bind(this)}
