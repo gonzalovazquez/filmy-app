@@ -126,6 +126,7 @@ class SignIn extends React.Component{
           value={this.state.email}
           placeholder="Type email address"
           autoCapitalize="none"
+          autoCorrect="false"
           keyboardType="email-address"
           onChange={this.updateEmail.bind(this)} />
         <TextInput
@@ -133,6 +134,7 @@ class SignIn extends React.Component{
           value={this.state.password}
           placeholder="Type password"
           autoCapitalize="none"
+          autoCorrect="false"
           secureTextEntry="true"
           onChange={this.updatePassword.bind(this)} />
         <TouchableHighlight
