@@ -80,6 +80,7 @@ class Search extends React.Component{
     this.setState({
       isLoading: true
     });
+    debugger;
     api.findMovie(this.state.title)
        .then((res) => {
          if (!res.Response) {

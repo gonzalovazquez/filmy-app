@@ -27,7 +27,7 @@ var styles = StyleSheet.create({
     borderColor: 'black'
   },
   buttonText: {
-    fontSize: 24,
+    fontSize: 14,
     color: 'white',
     alignSelf: 'center'
   }
@@ -87,7 +87,7 @@ class Main extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <Image source={require('../Images/loadingScreen.png')} style={styles.image}/>
+        <Image source={{uri: 'http://gvazquez.webfactional.com/filmy/loading-screen.png'}} style={styles.image}/>
         <TouchableHighlight
           style={this.makeBackground(0)}
           onPress={this.findMovie.bind(this)}

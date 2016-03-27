@@ -108,7 +108,7 @@ class Dashboard extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-      <Image source={require('../../Images/loadingScreen.png')} style={styles.image}/>
+      <Image source={{uri: 'http://gvazquez.webfactional.com/filmy/loading-screen.png'}} style={styles.image}/>
         <TouchableHighlight
           style={this.makeBackground(0)}
           onPress={this.findMovie.bind(this)}
