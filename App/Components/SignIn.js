@@ -141,13 +141,13 @@ class SignIn extends React.Component{
             style={styles.button}
             onPress={this.signIn.bind(this)}
             underlayColor="white">
-              <Text style={styles.buttonText}> SignIn </Text>
+              <Text style={styles.buttonText}> Sign In </Text>
         </TouchableHighlight>
         <TouchableHighlight
             style={styles.button}
             onPress={this.signUp.bind(this)}
             underlayColor="white">
-              <Text style={styles.buttonText}> SignUp </Text>
+              <Text style={styles.buttonText}> Sign Up </Text>
         </TouchableHighlight>
       </View>
     )
