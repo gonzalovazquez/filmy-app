@@ -80,7 +80,7 @@ class Main extends React.Component{
   }
   signIn(){
     this.props.navigator.push({
-        title: 'SignIn',
+        title: 'Sign In',
         component: SignIn
    });
  }
