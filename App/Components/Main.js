@@ -17,14 +17,12 @@ var {
 
 var styles = StyleSheet.create({
   container: {
-    marginTop: 65,
+    marginTop: 10,
     flex: 1
   },
   image: {
     width: 380,
-    height: 300,
-    borderWidth: 0.5,
-    borderColor: 'black'
+    height: 300
   },
   buttonText: {
     fontSize: 14,

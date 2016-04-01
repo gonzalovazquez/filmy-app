@@ -22,9 +22,7 @@ var styles = StyleSheet.create({
   },
   image: {
     width: 380,
-    height: 300,
-    borderWidth: 0.5,
-    borderColor: 'black'
+    height: 300
   },
   buttonText: {
     fontSize: 24,
