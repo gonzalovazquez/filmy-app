@@ -30,9 +30,9 @@ var styles = StyleSheet.create({
   searchInput: {
     height: 50,
     padding: 4,
-    marginRight: 5,
+    margin: 5,
     fontSize: 23,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
     borderRadius: 8,
     color: 'white'

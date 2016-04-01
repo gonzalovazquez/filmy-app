@@ -32,10 +32,11 @@ var styles = StyleSheet.create({
   },
   searchInput: {
     height: 50,
+    margin: 5,
     padding: 4,
     marginRight: 5,
     fontSize: 23,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
     borderRadius: 8,
     color: 'white'
@@ -114,7 +115,7 @@ class SignIn extends React.Component{
   }
   signUp(){
     this.props.navigator.push({
-        title: 'SignUp',
+        title: 'Sign Up',
         component: SignUp
     });
   }
@@ -141,13 +142,13 @@ class SignIn extends React.Component{
             style={styles.button}
             onPress={this.signIn.bind(this)}
             underlayColor="white">
-              <Text style={styles.buttonText}> SignIn </Text>
+              <Text style={styles.buttonText}> Sign In </Text>
         </TouchableHighlight>
         <TouchableHighlight
             style={styles.button}
             onPress={this.signUp.bind(this)}
             underlayColor="white">
-              <Text style={styles.buttonText}> SignUp </Text>
+              <Text style={styles.buttonText}> Sign Up </Text>
         </TouchableHighlight>
       </View>
     )
